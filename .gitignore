@@ -13,3 +13,4 @@ open_rf-test-*
 *.o
 *.obj
 *.lst
+*.pdb
