@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/open_rf
+open_rf.so
+open_rf.dylib
+open_rf.dll
+open_rf.a
+open_rf.lib
+open_rf-test-*
+*.exe
+*.o
+*.obj
+*.lst

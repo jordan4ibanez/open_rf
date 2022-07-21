@@ -1,0 +1,12 @@
+{
+	"authors": [
+		"jordan4ibanez"
+	],
+	"copyright": "Copyright © 2022, jordan4ibanez",
+	"dependencies": {
+		"raylib-d": "~>4.0.1"
+	},
+	"description": "A minimal D application.",
+	"license": "mit",
+	"name": "open_rf"
+}
