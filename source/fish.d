@@ -92,6 +92,24 @@ struct FishContainer {
 		this.life[id] += adder;
 	}
 
+	// Simple getters
+
+	// For specific ID
+	Vector3 getPos(ulong id) {
+		return this.position[id];
+	}
+
+	// For the total length in memory synced
+	ulong totalLength() {
+		return exists.length;
+	}
+
+	// For the real length, this probably should be deprecated
+	ulong realLength() {
+		return this.collectIDs().length;
+	}
+
+
 	// This will heavily change in the future
 	void debugger(ulong id) {
 		writeln("FISH ID: ", id,
