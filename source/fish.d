@@ -3,6 +3,19 @@ module fish;
 import std.stdio;
 import raylib;
 
+// The possible states that a fish can be in
+enum FishStates {
+	RELAX,
+	WANDER,
+	FOCUS,
+	CHASE,
+	ATTACK,
+	FIGHT,
+	FIGHT_EXHAUSTED,
+	FIGHT_BREAKING_LOOSE,
+	ESCAPE
+}
+
 
 struct FishContainer {
 
