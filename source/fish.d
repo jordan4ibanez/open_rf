@@ -5,16 +5,34 @@ import raylib;
 
 // The possible states that a fish can be in
 enum FishStates {
+	// The fish is just chilling, looking around at nothing
 	RELAX,
+	// The fish is aimlessly wandering around the map
 	WANDER,
+	// The fish saw something off in the distance and wants to see it immediately
+	SPRINT,
+	// The fish is looking at the lure/bait
 	FOCUS,
+	// The fish is looking at the lure/bait and following
 	CHASE,
+	// The fish decided the lure/bait is tasty, going in for attack
 	ATTACK,
+	// The fish is fighting the player, exhaustion is rising
 	FIGHT,
+	// The fish is fighting the player, the fish is exhausted, player has no trouble reeling in
 	FIGHT_EXHAUSTED,
+	// The fish is thrashing loose, the hook was not set properly
 	FIGHT_BREAKING_LOOSE,
+	// The fish has gotten off of the lure/bait, it will run away in a random direction
 	ESCAPE
 }
+
+// The possible fish states that a fish can start in
+FishStates[3] STARTER_FISH_STATES = [
+	FishStates.RELAX,
+	FishStates.WANDER,
+	FishStates.SPRINT
+];
 
 ulong ID_DISPATCHER = 0;
 
