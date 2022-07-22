@@ -5,22 +5,36 @@ import fish;
 import raylib;
 
 void main() {
-	Fish fishy = new Fish(
-		55,
-		Vector3(55,555,55)
-	);
-
-	fishy.debugger();
-
-	InitWindow(800, 800, "test");
-
-	fishy.printPos();
 
 	Random random = Random(100);
 
-	double test = uniform(0.0, 100.0, random);
+	// A fish tank to hold the fish
+	Fish[3] fishTank;
 
-	writeln("test is: ", test);
+	// Lets add some fish in there
+	for (byte i = 0; i < 3; i++) {
+		fishTank[i] = new Fish(
+			uniform(0.0, 100.0, random),
+			Vector3(
+				uniform(-20.0, 20.0, random),
+				0.0,
+				uniform(-20.0, 20.0, random)
+			)
+		);
+	}
+
+
+	// Now let's see where those fish are located
+	writeln("--------------------");
+	writeln("Here are those fish:");
+	writeln("--------------------");
+	for (byte i = 0; i < 3; i++) {
+		fishTank[i].printPos();
+	}
+	writeln("--------------------");
+
+
+	InitWindow(800, 800, "test");
 
 	while (!WindowShouldClose()) {
 		BeginDrawing();
