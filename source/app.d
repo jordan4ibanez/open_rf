@@ -5,11 +5,25 @@ import std.string;
 import raylib;
 import fish;
 
+
 const string gameVersion = "0.0.0";
 const byte numberOfFish = 10;
 
 void main() {
 
+	FishContainer fishies = FishContainer();
+
+	fishies.newFish(Vector3(0,0,0), 100);
+	fishies.newFish(Vector3(0,0,1), 1100);
+	fishies.newFish(Vector3(1,0,1), 900);
+
+	fishies.removeFish(1);
+
+	ulong[] ids = fishies.collectIDs();
+
+	writeln("FISH:", ids);
+
+	/*
 	Random random = Random(unpredictableSeed());
 
 	// A fish tank to hold the fish
@@ -17,7 +31,7 @@ void main() {
 
 	// Lets add some fish in there
 	for (byte i = 0; i < numberOfFish; i++) {
-		fishTank[i] = new Fish(
+		fishTank[i] = Fish(
 			uniform(0.0, 100.0, random),
 			Vector3(
 				uniform(-20.0, 20.0, random),
@@ -33,7 +47,8 @@ void main() {
 	writeln("Here are those fish:");
 	writeln("--------------------");
 	for (byte i = 0; i < numberOfFish; i++) {
-		fishTank[i].printPos();
+		// fishTank[i].printPos();
+		fishTank[i].debugger();
 	}
 	writeln("--------------------");
 
@@ -105,6 +120,22 @@ void main() {
 
 
 		for (byte i = 0; i < numberOfFish; i++) {
+
+			Fish thisFish = fishTank[i];
+
+			//
+			switch (thisFish.species) {
+				case FishSpecies.TROUT: {
+					writeln("dis a trout");
+					break;
+				}
+				default: {
+					writeln("o no dis no fish");
+				}
+			}
+			//
+
+			
 			DrawModel(fish, fishTank[i].position,1,Colors.RAYWHITE);
 		}
 
@@ -112,4 +143,5 @@ void main() {
 
 		EndDrawing();
 	}
+	*/
 }
