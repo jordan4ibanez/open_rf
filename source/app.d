@@ -12,19 +12,20 @@ const byte numberOfFish = 10;
 void main() {
 
 	// A fish tank to hold the fish
-	FishContainer fishTank = FishContainer();
+	Fish[] fishTank = new Fish[numberOfFish];
 
 	Random random = Random(unpredictableSeed());
 
 	// Lets add some fish in there
 	for (byte i = 0; i < numberOfFish; i++) {
-		fishTank.newFish(
+		fishTank[i] = Fish(
 			Vector3(
 				uniform(-20.0, 20.0, random),
 				0.0,
 				uniform(-20.0, 20.0, random)
 			),
-			uniform(0.0, 100.0, random)
+			uniform(0.0, 100.0, random),
+			uniform(0.0, 100.0, random),
 		);
 	}
 
@@ -33,8 +34,8 @@ void main() {
 	writeln("--------------------");
 	writeln("Here are those fish:");
 	writeln("--------------------");
-	foreach (ulong i; fishTank.collectIDs()) {
-		fishTank.debugger(i);
+	for (byte i = 0; i < numberOfFish; i++) {
+		fishTank[i].debugger();
 	}
 	writeln("--------------------");
 
@@ -68,7 +69,8 @@ void main() {
 	int timer = 0;
 	byte selection = 0;
 
-	Vector3 cameraTarget = fishTank.getPos(0);
+
+	Vector3 cameraTarget = fishTank[0].getPos();
 
 	// Music things
 	Music music = LoadMusicStream("music/calmant.ogg");
@@ -92,7 +94,9 @@ void main() {
 			if (selection >= numberOfFish){
 				selection = 0;
 			}
-			cameraTarget = fishTank.getPos(selection);
+
+			cameraTarget = fishTank[selection].getPos();
+
 			timer = 0;
 		}
 
@@ -105,8 +109,7 @@ void main() {
 
 
 
-		// for (byte i = 0; i < numberOfFish; i++) {
-		foreach (ulong i; fishTank.collectIDs()) {
+		for (byte i = 0; i < numberOfFish; i++) {
 
 			/*
 			switch (thisFish.species) {
@@ -121,7 +124,7 @@ void main() {
 			*/
 
 			
-			DrawModel(fish, fishTank.getPos(i),1,Colors.RAYWHITE);
+			DrawModel(fish, fishTank[i].getPos(),1,Colors.RAYWHITE);
 		}
 
 		EndMode3D();
