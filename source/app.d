@@ -11,33 +11,20 @@ const byte numberOfFish = 10;
 
 void main() {
 
-	FishContainer fishies = FishContainer();
-
-	fishies.newFish(Vector3(0,0,0), 100);
-	fishies.newFish(Vector3(0,0,1), 1100);
-	fishies.newFish(Vector3(1,0,1), 900);
-
-	fishies.removeFish(1);
-
-	ulong[] ids = fishies.collectIDs();
-
-	writeln("FISH:", ids);
-
-	/*
-	Random random = Random(unpredictableSeed());
-
 	// A fish tank to hold the fish
-	Fish[numberOfFish] fishTank;
+	FishContainer fishTank = FishContainer();
+
+	Random random = Random(unpredictableSeed());
 
 	// Lets add some fish in there
 	for (byte i = 0; i < numberOfFish; i++) {
-		fishTank[i] = Fish(
-			uniform(0.0, 100.0, random),
+		fishTank.newFish(
 			Vector3(
 				uniform(-20.0, 20.0, random),
 				0.0,
 				uniform(-20.0, 20.0, random)
-			)
+			),
+			uniform(0.0, 100.0, random)
 		);
 	}
 
@@ -46,9 +33,8 @@ void main() {
 	writeln("--------------------");
 	writeln("Here are those fish:");
 	writeln("--------------------");
-	for (byte i = 0; i < numberOfFish; i++) {
-		// fishTank[i].printPos();
-		fishTank[i].debugger();
+	foreach (ulong i; fishTank.collectIDs()) {
+		fishTank.debugger(i);
 	}
 	writeln("--------------------");
 
@@ -82,12 +68,11 @@ void main() {
 	int timer = 0;
 	byte selection = 0;
 
-	Vector3 cameraTarget = fishTank[0].position;
+	Vector3 cameraTarget = fishTank.getPos(0);
 
+	// Music things
 	Music music = LoadMusicStream("music/calmant.ogg");
-
 	SetMusicVolume(music, 0.6);
-
 	PlayMusicStream(music);
 
 	while (!WindowShouldClose()) {
@@ -107,7 +92,7 @@ void main() {
 			if (selection >= numberOfFish){
 				selection = 0;
 			}
-			cameraTarget = fishTank[selection].position;
+			cameraTarget = fishTank.getPos(selection);
 			timer = 0;
 		}
 
@@ -119,11 +104,11 @@ void main() {
 		BeginMode3D(camera);
 
 
-		for (byte i = 0; i < numberOfFish; i++) {
 
-			Fish thisFish = fishTank[i];
+		// for (byte i = 0; i < numberOfFish; i++) {
+		foreach (ulong i; fishTank.collectIDs()) {
 
-			//
+			/*
 			switch (thisFish.species) {
 				case FishSpecies.TROUT: {
 					writeln("dis a trout");
@@ -133,15 +118,14 @@ void main() {
 					writeln("o no dis no fish");
 				}
 			}
-			//
+			*/
 
 			
-			DrawModel(fish, fishTank[i].position,1,Colors.RAYWHITE);
+			DrawModel(fish, fishTank.getPos(i),1,Colors.RAYWHITE);
 		}
 
 		EndMode3D();
 
 		EndDrawing();
 	}
-	*/
 }
