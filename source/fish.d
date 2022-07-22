@@ -4,7 +4,7 @@ import std.stdio;
 import raylib;
 
 // The possible states that a fish can be in
-enum FishStates {
+enum FishState {
 	// The fish is just chilling, looking around at nothing
 	RELAX,
 	// The fish is aimlessly wandering around the map
@@ -28,10 +28,10 @@ enum FishStates {
 }
 
 // The possible fish states that a fish can start in
-FishStates[3] STARTER_FISH_STATES = [
-	FishStates.RELAX,
-	FishStates.WANDER,
-	FishStates.SPRINT
+FishState[3] STARTER_FISH_STATES = [
+	FishState.RELAX,
+	FishState.WANDER,
+	FishState.SPRINT
 ];
 
 ulong ID_DISPATCHER = 0;
