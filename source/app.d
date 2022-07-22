@@ -7,5 +7,7 @@ void main() {
 
 	fishy.debugger();
 
+	destroy(fishy);
+
 	InitWindow(800, 800, "test");
 }
