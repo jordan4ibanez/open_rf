@@ -18,7 +18,7 @@ enum FishStates {
 
 ulong ID_DISPATCHER = 0;
 
-struct FishContainer {
+struct Fish {
 
 	ulong ID;
 	Vector3 position;
@@ -37,14 +37,14 @@ struct FishContainer {
 	}
     
 	// Adds life to a fish, this is a placeholder debug
-	void addLife(ulong id, double adder) {
+	void addLife(double adder) {
 		this.life += adder;
 	}
 
 	// Simple getters
 
 	// For specific ID
-	Vector3 getPos(ulong id) {
+	Vector3 getPos() {
 		return this.position;
 	}
 
