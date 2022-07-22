@@ -6,16 +6,17 @@ import raylib;
 import fish;
 
 const string gameVersion = "0.0.0";
+const byte numberOfFish = 10;
 
 void main() {
 
 	Random random = Random(unpredictableSeed());
 
 	// A fish tank to hold the fish
-	Fish[3] fishTank;
+	Fish[numberOfFish] fishTank;
 
 	// Lets add some fish in there
-	for (byte i = 0; i < 3; i++) {
+	for (byte i = 0; i < numberOfFish; i++) {
 		fishTank[i] = new Fish(
 			uniform(0.0, 100.0, random),
 			Vector3(
@@ -31,7 +32,7 @@ void main() {
 	writeln("--------------------");
 	writeln("Here are those fish:");
 	writeln("--------------------");
-	for (byte i = 0; i < 3; i++) {
+	for (byte i = 0; i < numberOfFish; i++) {
 		fishTank[i].printPos();
 	}
 	writeln("--------------------");
@@ -45,6 +46,8 @@ void main() {
 
 	SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
 
+	InitAudioDevice();
+
 	Model fish = LoadModel("models/rainbowtrout.obj");
 	Texture fishTexture = LoadTexture("models/rainbowtrout.png");
 	fish.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = fishTexture;
@@ -55,7 +58,7 @@ void main() {
 
 	Camera camera = Camera(
 		Vector3(0,10,10),
-		fishTank[0].position,
+		Vector3(0,0,0),
 		Vector3(0,1,0),
 		55,
 		CameraProjection.CAMERA_PERSPECTIVE
@@ -64,9 +67,19 @@ void main() {
 	int timer = 0;
 	byte selection = 0;
 
-	Vector3 cameraTarget = Vector3(0,0,0);
+	Vector3 cameraTarget = fishTank[0].position;
+
+	Music music = LoadMusicStream("music/calmant.ogg");
+
+	SetMusicVolume(music, 0.6);
+
+	PlayMusicStream(music);
 
 	while (!WindowShouldClose()) {
+
+
+		UpdateMusicStream(music);
+
 		BeginDrawing();
 
 		timer++;
@@ -76,7 +89,7 @@ void main() {
 
 		if (timer >= 120) {
 			selection++;
-			if (selection >= 3){
+			if (selection >= numberOfFish){
 				selection = 0;
 			}
 			cameraTarget = fishTank[selection].position;
@@ -91,7 +104,7 @@ void main() {
 		BeginMode3D(camera);
 
 
-		for (byte i = 0; i < 3; i++) {
+		for (byte i = 0; i < numberOfFish; i++) {
 			DrawModel(fish, fishTank[i].position,1,Colors.RAYWHITE);
 		}
 
