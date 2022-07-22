@@ -5,11 +5,16 @@ import fish;
 import raylib;
 
 void main() {
-	Fish fishy = new Fish();
+	Fish fishy = new Fish(
+		55,
+		Vector3(55,555,55)
+	);
 
 	fishy.debugger();
 
 	InitWindow(800, 800, "test");
+
+	fishy.printPos();
 
 	Random random = Random(100);
 
