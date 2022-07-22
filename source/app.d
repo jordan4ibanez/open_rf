@@ -43,6 +43,8 @@ void main() {
 
 	SetTargetFPS(60);
 
+	SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
+
 	Model fish = LoadModel("models/rainbowtrout.obj");
 	Texture fishTexture = LoadTexture("models/rainbowtrout.png");
 	fish.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = fishTexture;
