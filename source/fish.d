@@ -40,12 +40,22 @@ FishState giveRandomStartState(Random random) {
 	return STARTER_FISH_STATES[uniform(0,3, random)];
 }
 
+// Quickly dispatches random starter rotations
+Vector3 giveRandomStartRotation(Random random) {
+	return Vector3(
+		0,
+		uniform(-180.0, 180.0, random),
+		0
+	);
+}
+
 ulong ID_DISPATCHER = 0;
 
 struct Fish {
 
 	ulong ID;
 	Vector3 position;
+	Vector3 rotation;
 	double life = 0;
 	double exhaustion = 0;
 	FishState state;
@@ -55,6 +65,7 @@ struct Fish {
 		this.position.x = position.x;
 		this.position.y = position.y;
 		this.position.z = position.z;
+		this.rotation = giveRandomStartRotation(random);
 		this.life = life;
 		this.exhaustion = exhaustion;
 
@@ -71,10 +82,17 @@ struct Fish {
 	}
 
 	// Simple getters
-
-	// For specific ID
-	Vector3 getPos() {
+	Vector3 getPosition() {
 		return this.position;
+	}
+	Vector3 getRotation() {
+		return this.rotation;
+	}
+
+
+	// The fish's AI, what it thinks each tick
+	void onTick() {
+		
 	}
 
 
