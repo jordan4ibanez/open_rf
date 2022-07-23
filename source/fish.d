@@ -61,9 +61,12 @@ struct Fish {
 	// AI variables
 	double life = 0;
 	double exhaustion = 0;
+	double stateTimer = 0;
+	double movementTimer = 0;
 	FishState state;
 
 	// Animation variables
+	Vector3 rotationGoal;
 
 
 	this(Vector3 position, double life, double exhaustion, Random random) {
@@ -71,9 +74,18 @@ struct Fish {
 		this.position.x = position.x;
 		this.position.y = position.y;
 		this.position.z = position.z;
+
 		this.rotation = giveRandomStartRotation(random);
+
+		// Clone the rotations so the fish do not randomly spin at start
+		this.rotationGoal.x = this.rotation.x;
+		this.rotationGoal.y = this.rotation.y;
+		this.rotationGoal.z = this.rotation.z;
+
 		this.life = life;
 		this.exhaustion = exhaustion;
+		this.stateTimer = uniform(5.0,20.0, random);
+		this.movementTimer = uniform(3.0,10.0, random);
 
 		this.state = giveRandomStartState(random);
 
@@ -100,9 +112,13 @@ struct Fish {
 		// This is debug, if something is going seriously wrong it's probably here
 		this.state = FishState.RELAX;
 
+		
+
 		switch (this.state) {
 			case FishState.RELAX: {
-				writeln("FISH ID: ", this.uuid, " is relaxed");
+				// writeln("FISH ID: ", this.uuid, " is relaxed");
+				writeln("movementTimer: ", this.movementTimer);
+
 				break;
 			}
 			case FishState.WANDER: {
