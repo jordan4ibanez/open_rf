@@ -61,7 +61,7 @@ void main() {
 
 	Camera camera = Camera(
 		Vector3(0,10,10),
-		Vector3(0,5,0),
+		Vector3(0,0,0),
 		Vector3(0,1,0),
 		55,
 		CameraProjection.CAMERA_PERSPECTIVE
@@ -123,6 +123,12 @@ void main() {
 
 		BeginMode3D(camera);
 
+		// Reference cubes
+		DrawCube(Vector3(0,-10,0),2,2,2,Colors.BLACK);
+		DrawCube(Vector3(10,0,0),2,2,2,Colors.BLACK);
+		DrawCube(Vector3(-10,0,0),2,2,2,Colors.BLACK);
+		DrawCube(Vector3(0,0,10),2,2,2,Colors.BLACK);
+		DrawCube(Vector3(0,0,-10),2,2,2,Colors.BLACK);
 
 
 		// Draw each fish
