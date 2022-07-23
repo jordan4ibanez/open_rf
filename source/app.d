@@ -72,7 +72,7 @@ void main() {
 	byte selection = 0;
 
 
-	Vector3 cameraTarget = fishTank[0].getPos();
+	Vector3 cameraTarget = fishTank[0].getPosition();
 
 	// Music things
 	Music music = LoadMusicStream("music/calmant.ogg");
@@ -91,13 +91,13 @@ void main() {
 		// Fancy linear interpolation, probably makes a lot of objects in the heap
 		camera.target = Vector3Lerp(camera.target, cameraTarget, 0.1);
 
-		if (timer >= 120) {
+		if (timer >= 12_000) {
 			selection++;
 			if (selection >= numberOfFish){
 				selection = 0;
 			}
 
-			cameraTarget = fishTank[selection].getPos();
+			cameraTarget = fishTank[selection].getPosition();
 
 			timer = 0;
 		}
@@ -111,6 +111,7 @@ void main() {
 
 
 
+		// Draw each fish
 		foreach (Fish fish; fishTank) {
 
 			/*
@@ -124,9 +125,9 @@ void main() {
 				}
 			}
 			*/
-
-			
-			DrawModel(fishModel, fish.getPos(),1,Colors.RAYWHITE);
+			// DrawModelEx(model,position,roationaxis,rotationangle,scale,color)
+			fishModel.transform = MatrixRotateXYZ(fish.getRotation() * DEG2RAD);
+			DrawModel(fishModel, fish.getPosition(),1,Colors.RAYWHITE);
 		}
 
 		EndMode3D();
