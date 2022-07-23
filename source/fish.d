@@ -2,6 +2,7 @@ module fish;
 
 import std.stdio;
 import std.random;
+import std.uuid;
 import raylib;
 
 // The possible states that a fish can be in
@@ -49,11 +50,9 @@ Vector3 giveRandomStartRotation(Random random) {
 	);
 }
 
-ulong ID_DISPATCHER = 0;
-
 struct Fish {
-	// This ID will probably be replaced with a 
-	ulong ID;
+	// This makes the fish unique
+	UUID uuid;
 
 	// 3D spacial variables
 	Vector3 position;
@@ -78,9 +77,7 @@ struct Fish {
 
 		this.state = giveRandomStartState(random);
 
-		// I'm sure that this will never overflow with ulong but this is probably a bad idea
-		this.ID = ID_DISPATCHER;
-		ID_DISPATCHER++;
+		this.uuid = randomUUID();
 	}
     
 	// Adds life to a fish, this is a placeholder debug
@@ -105,20 +102,20 @@ struct Fish {
 
 		switch (this.state) {
 			case FishState.RELAX: {
-				writeln("FISH ID: ", this.ID, " is relaxed");
+				writeln("FISH ID: ", this.uuid, " is relaxed");
 				break;
 			}
 			case FishState.WANDER: {
-				writeln("FISH ID: ", this.ID, " is just wandering around");
+				writeln("FISH ID: ", this.uuid, " is just wandering around");
 				break;
 			}
 			case FishState.SPRINT: {
-				writeln("FISH ID: ", this.ID, " HAS SOMEWHERE TO BE!!");
+				writeln("FISH ID: ", this.uuid, " HAS SOMEWHERE TO BE!!");
 				break;
 			}
 			default: {
-				writeln("Something has gone extremely wrong with fish ID: ", this.ID);
-				writeln("WARNING: FISH ID ", this.ID, " HAS DEFAULTED IN IT'S FISHSTATE!");
+				writeln("Something has gone extremely wrong with fish ID: ", this.uuid);
+				writeln("WARNING: FISH ID ", this.uuid, " HAS DEFAULTED IN IT'S FISHSTATE!");
 			}
 		}
 	}
@@ -127,7 +124,7 @@ struct Fish {
 	// This will heavily change in the future
 	void debugger() {
 		// writeln("FISH ID: ", this.ID, " | I am at X: ", this.position.x, " | Y: ", this.position.y, " | Z: ", this.position.z);
-		writeln("FISH ID: ", this.ID, " IS IN STATE: ", this.state);
+		writeln("FISH ID: ", this.uuid, " IS IN STATE: ", this.state);
 	}
 
 	void printPos() {
