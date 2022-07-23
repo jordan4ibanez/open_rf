@@ -78,9 +78,9 @@ struct Fish {
 	double movementSpeed = 0;
 	// These will be defined by the fish registration
 	double minNormalSpeed = 0;
-	double topNormalSpeed = 0;
+	double maxNormalSpeed = 0;
 	double minSprintSpeed = 0;
-	double topSprintSpeed = 0;
+	double maxSprintSpeed = 0;
 	
 	
 	FishState state;
