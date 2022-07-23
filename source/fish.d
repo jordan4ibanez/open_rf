@@ -42,12 +42,20 @@ FishState giveRandomStartState(Random random) {
 }
 
 // Quickly dispatches random starter rotations
-Vector3 giveRandomStartRotation(Random random) {
+Vector3 giveRandomRotation(Random random) {
 	return Vector3(
 		0,
 		uniform(-180.0, 180.0, random),
 		0
 	);
+}
+
+// Dispatches random values for animation & AI
+double giveRandomStateTimer(Random random) {
+	return uniform(5.0,20.0, random);
+}
+double giveRandomMovementTimer(Random random) {
+	return uniform(3.0,10.0, random);
 }
 
 struct Fish {
@@ -68,14 +76,14 @@ struct Fish {
 	// Animation variables
 	Vector3 rotationGoal;
 
-
+	// Constructor
 	this(Vector3 position, double life, double exhaustion, Random random) {
 
 		this.position.x = position.x;
 		this.position.y = position.y;
 		this.position.z = position.z;
 
-		this.rotation = giveRandomStartRotation(random);
+		this.rotation = giveRandomRotation(random);
 
 		// Clone the rotations so the fish do not randomly spin at start
 		this.rotationGoal.x = this.rotation.x;
@@ -84,8 +92,8 @@ struct Fish {
 
 		this.life = life;
 		this.exhaustion = exhaustion;
-		this.stateTimer = uniform(5.0,20.0, random);
-		this.movementTimer = uniform(3.0,10.0, random);
+		this.stateTimer = giveRandomStateTimer(random);
+		this.movementTimer = giveRandomMovementTimer(random);
 
 		this.state = giveRandomStartState(random);
 
@@ -112,12 +120,30 @@ struct Fish {
 		// This is debug, if something is going seriously wrong it's probably here
 		this.state = FishState.RELAX;
 
-		
+		// Tick down the timers
+		if (this.stateTimer > 0) {
+			this.stateTimer -= delta;
+		}
+		if (this.movementTimer > 0) {
+			this.movementTimer -= delta;
+		}
+
+		writeln("movementTimer: ", this.movementTimer);
+
+		// Linear interpolate the rotation into the rotation goal
+		this.rotation = Vector3Lerp(this.rotation, this.rotationGoal, 0.1);
 
 		switch (this.state) {
 			case FishState.RELAX: {
 				// writeln("FISH ID: ", this.uuid, " is relaxed");
-				writeln("movementTimer: ", this.movementTimer);
+				
+
+				/*
+				if (movementTimer <= 0) {
+					this.rotationGoal = giveRandomRotation(random);
+					// this.movementTimer = giveRandomMovementTimer(random);
+				}
+				*/
 
 				break;
 			}
