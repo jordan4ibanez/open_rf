@@ -90,7 +90,7 @@ void main() {
 		timer++;
 
 		// Perform fish's logic tick
-		foreach (Fish fish; fishTank) {
+		foreach (ref Fish fish; fishTank) {
 			fish.onTick(delta, random);
 		}
 
