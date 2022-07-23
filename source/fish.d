@@ -44,7 +44,7 @@ FishState giveRandomStartState(Random random) {
 // Quickly dispatches random starter rotations
 Vector3 giveRandomRotation(Random random) {
 	return Vector3(
-		0,
+		uniform(-50.0, 50.0, random),
 		uniform(-180.0, 180.0, random),
 		0
 	);
@@ -56,6 +56,7 @@ double giveRandomStateTimer(Random random) {
 }
 double giveRandomMovementTimer(Random random) {
 	return uniform(3.0,10.0, random);
+	// return uniform(0.5,1.0, random); // Debug
 }
 
 struct Fish {
@@ -71,6 +72,7 @@ struct Fish {
 	double exhaustion = 0;
 	double stateTimer = 0;
 	double movementTimer = 0;
+	double movementSpeed = 0;
 	FishState state;
 
 	// Animation variables
@@ -78,7 +80,7 @@ struct Fish {
 
 	// Constructor
 	this(Vector3 position, double life, double exhaustion) {
-		
+
 		Random random = Random(unpredictableSeed());
 
 		this.position.x = position.x;
@@ -132,18 +134,19 @@ struct Fish {
 			this.movementTimer -= delta;
 		}
 
-		// Linear interpolate the rotation into the rotation goal
-		this.rotation = Vector3Lerp(this.rotation, this.rotationGoal, 0.1);
-
 		switch (this.state) {
 			case FishState.RELAX: {
-
-				// writeln("FISH ID: ", this.uuid, " is relaxed");
-
-				// writeln("movementTimer: ", this.movementTimer);
 				
+				// writeln(this.movementTimer);
+
+				// Linear interpolation is slower when relaxed
+				this.rotation = Vector3Lerp(
+					this.rotation,
+					this.rotationGoal,
+					0.025
+				);
+				// Look around randomly
 				if (this.movementTimer <= 0) {
-					writeln("Hit random");
 					this.rotationGoal = giveRandomRotation(random);
 					this.movementTimer = giveRandomMovementTimer(random);
 				}
