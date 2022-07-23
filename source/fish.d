@@ -77,7 +77,9 @@ struct Fish {
 	Vector3 rotationGoal;
 
 	// Constructor
-	this(Vector3 position, double life, double exhaustion, Random random) {
+	this(Vector3 position, double life, double exhaustion) {
+		
+		Random random = Random(unpredictableSeed());
 
 		this.position.x = position.x;
 		this.position.y = position.y;
@@ -115,7 +117,9 @@ struct Fish {
 
 
 	// The fish's AI, what it thinks each tick
-	void onTick(double delta, Random random) {
+	void onTick(double delta) {
+
+		Random random = Random(unpredictableSeed());
 
 		// This is debug, if something is going seriously wrong it's probably here
 		this.state = FishState.RELAX;
@@ -128,22 +132,21 @@ struct Fish {
 			this.movementTimer -= delta;
 		}
 
-		writeln("movementTimer: ", this.movementTimer);
-
 		// Linear interpolate the rotation into the rotation goal
 		this.rotation = Vector3Lerp(this.rotation, this.rotationGoal, 0.1);
 
 		switch (this.state) {
 			case FishState.RELAX: {
-				// writeln("FISH ID: ", this.uuid, " is relaxed");
-				
 
-				/*
-				if (movementTimer <= 0) {
+				// writeln("FISH ID: ", this.uuid, " is relaxed");
+
+				// writeln("movementTimer: ", this.movementTimer);
+				
+				if (this.movementTimer <= 0) {
+					writeln("Hit random");
 					this.rotationGoal = giveRandomRotation(random);
-					// this.movementTimer = giveRandomMovementTimer(random);
+					this.movementTimer = giveRandomMovementTimer(random);
 				}
-				*/
 
 				break;
 			}
