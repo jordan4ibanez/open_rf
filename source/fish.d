@@ -91,7 +91,7 @@ struct Fish {
 
 
 	// The fish's AI, what it thinks each tick
-	void onTick() {
+	void onTick(double delta, Random random) {
 		
 	}
 
