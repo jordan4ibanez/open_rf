@@ -94,7 +94,7 @@ void main() {
 			fish.onTick(delta, random);
 		}
 
-
+		// This sets the camera to focus on the next fish
 		if (timer >= 12_000) {
 			selection++;
 			if (selection >= numberOfFish){
