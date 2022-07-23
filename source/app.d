@@ -95,6 +95,7 @@ void main() {
 		}
 
 		// This sets the camera to focus on the next fish
+		/*
 		if (timer >= 12_000) {
 			selection++;
 			if (selection >= numberOfFish){
@@ -105,6 +106,7 @@ void main() {
 
 			timer = 0;
 		}
+		*/
 
 
 		// Fancy linear interpolation
