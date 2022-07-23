@@ -72,8 +72,17 @@ struct Fish {
 	double life = 0;
 	double exhaustion = 0;
 	double stateTimer = 0;
+
+	// Movement Variables
 	double movementTimer = 0;
 	double movementSpeed = 0;
+	// These will be defined by the fish registration
+	double minNormalSpeed = 0;
+	double topNormalSpeed = 0;
+	double minSprintSpeed = 0;
+	double topSprintSpeed = 0;
+	
+	
 	FishState state;
 
 	// Animation variables
