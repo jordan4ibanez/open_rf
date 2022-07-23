@@ -1,6 +1,7 @@
 module fish;
 
 import std.stdio;
+import std.random;
 import raylib;
 
 // The possible states that a fish can be in
@@ -34,6 +35,11 @@ FishState[3] STARTER_FISH_STATES = [
 	FishState.SPRINT
 ];
 
+// Quickly dispatches random starter states
+FishState giveRandomStartState(Random random) {
+	return STARTER_FISH_STATES[uniform(0,3, random)];
+}
+
 ulong ID_DISPATCHER = 0;
 
 struct Fish {
@@ -42,15 +48,20 @@ struct Fish {
 	Vector3 position;
 	double life = 0;
 	double exhaustion = 0;
+	FishState state;
 
-	this(Vector3 position, double life, double exhaustion) {
+	this(Vector3 position, double life, double exhaustion, Random random) {
+
 		this.position.x = position.x;
 		this.position.y = position.y;
 		this.position.z = position.z;
 		this.life = life;
 		this.exhaustion = exhaustion;
-		this.ID = ID_DISPATCHER;
 
+		this.state = giveRandomStartState(random);
+
+		// I'm sure that this will never overflow with ulong but this is probably a bad idea
+		this.ID = ID_DISPATCHER;
 		ID_DISPATCHER++;
 	}
     
@@ -69,10 +80,8 @@ struct Fish {
 
 	// This will heavily change in the future
 	void debugger() {
-		writeln("FISH ID: ", this.ID,
-		" | I am at X: ", this.position.x,
-		" | Y: ", this.position.y,
-		" | Z: ", this.position.z);
+		// writeln("FISH ID: ", this.ID, " | I am at X: ", this.position.x, " | Y: ", this.position.y, " | Z: ", this.position.z);
+		writeln("FISH ID: ", this.ID, " IS IN STATE: ", this.state);
 	}
 
 	void printPos() {
