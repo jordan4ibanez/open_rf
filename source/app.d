@@ -61,7 +61,7 @@ void main() {
 
 	Camera camera = Camera(
 		Vector3(0,10,10),
-		Vector3(0,0,0),
+		Vector3(0,5,0),
 		Vector3(0,1,0),
 		55,
 		CameraProjection.CAMERA_PERSPECTIVE
@@ -94,8 +94,7 @@ void main() {
 		}
 
 		// This sets the camera to focus on the next fish
-		/*
-		if (timer >= 12_000) {
+		if (timer >= 75) {
 			selection++;
 			if (selection >= numberOfFish){
 				selection = 0;
@@ -105,7 +104,6 @@ void main() {
 
 			timer = 0;
 		}
-		*/
 
 
 		// Fancy linear interpolation
