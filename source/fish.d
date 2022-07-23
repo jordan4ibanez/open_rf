@@ -66,6 +66,7 @@ struct Fish {
 	// 3D spacial variables
 	Vector3 position;
 	Vector3 rotation;
+	Vector3 positionGoal;
 
 	// AI variables
 	double life = 0;
@@ -86,6 +87,10 @@ struct Fish {
 		this.position.x = position.x;
 		this.position.y = position.y;
 		this.position.z = position.z;
+
+		this.positionGoal.x = position.x;
+		this.positionGoal.y = position.y;
+		this.positionGoal.z = position.z;
 
 		this.rotation = giveRandomRotation(random);
 
