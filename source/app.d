@@ -25,8 +25,7 @@ void main() {
 				uniform(-20.0, 20.0, random)
 			),
 			uniform(0.0, 100.0, random),
-			uniform(0.0, 100.0, random),
-			random
+			uniform(0.0, 100.0, random)
 		);
 	}
 
@@ -91,7 +90,7 @@ void main() {
 
 		// Perform fish's logic tick
 		foreach (ref Fish fish; fishTank) {
-			fish.onTick(delta, random);
+			fish.onTick(delta);
 		}
 
 		// This sets the camera to focus on the next fish
