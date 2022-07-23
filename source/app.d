@@ -7,7 +7,7 @@ import fish;
 
 
 const string gameVersion = "0.0.0";
-const byte numberOfFish = 1;
+const byte numberOfFish = 100;
 
 void main() {
 
