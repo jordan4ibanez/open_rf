@@ -35,8 +35,9 @@ void main() {
 	writeln("--------------------");
 	writeln("Here are those fish:");
 	writeln("--------------------");
-	for (byte i = 0; i < numberOfFish; i++) {
-		fishTank[i].debugger();
+	
+	foreach (Fish fish; fishTank) {
+		fish.debugger();
 	}
 	writeln("--------------------");
 
@@ -51,9 +52,9 @@ void main() {
 
 	InitAudioDevice();
 
-	Model fish = LoadModel("models/rainbowtrout.obj");
+	Model fishModel = LoadModel("models/rainbowtrout.obj");
 	Texture fishTexture = LoadTexture("models/rainbowtrout.png");
-	fish.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = fishTexture;
+	fishModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = fishTexture;
 	// Material fishMaterial = LoadMaterialDefault();
 	// SetMaterialTexture(&fishMaterial,0, fishTexture);
 	// SetModelMeshMaterial(&fish,0, 0);
@@ -110,7 +111,7 @@ void main() {
 
 
 
-		for (byte i = 0; i < numberOfFish; i++) {
+		foreach (Fish fish; fishTank) {
 
 			/*
 			switch (thisFish.species) {
@@ -125,7 +126,7 @@ void main() {
 			*/
 
 			
-			DrawModel(fish, fishTank[i].getPos(),1,Colors.RAYWHITE);
+			DrawModel(fishModel, fish.getPos(),1,Colors.RAYWHITE);
 		}
 
 		EndMode3D();
