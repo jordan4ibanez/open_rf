@@ -36,6 +36,7 @@ struct FishDefinition {
 
 // The struct which holds the definition structs
 struct FishDefinitionContainer {
+    
     FishDefinition[string] data;
 
     void registerFish(FishDefinition newDefinition) {

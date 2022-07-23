@@ -136,22 +136,33 @@ struct Fish {
 	void onTick(double delta) {
 
 		Random random = Random(unpredictableSeed());
-
-		// This is debug, if something is going seriously wrong it's probably here
-		this.state = FishState.RELAX;
+		/*	
+		Note: This needs a branch to check if the fish is engaged with the lure or bait
+		if it is, it needs to automatically ignore everything and lock into it's current branch
+		it also needs to check if the lure or bait is near if even in the water
+		*/
 
 		// Tick down the timers
 		if (this.stateTimer > 0) {
 			this.stateTimer -= delta;
+		} else {
+			// This resets the movement timer to allow the
+			// fish to react in it's new state immediately
+			this.movementTimer = 0;
+			this.stateTimer = giveRandomStateTimer(random);
+			this.state = giveRandomStartState(random);
 		}
+
 		if (this.movementTimer > 0) {
 			this.movementTimer -= delta;
 		}
 
+		// This is debug, if something is going seriously wrong it's probably here
+		// this.state = FishState.RELAX;
+		
+
 		switch (this.state) {
 			case FishState.RELAX: {
-				
-				// writeln(this.movementTimer);
 
 				// Linear interpolation is slower when relaxed
 				this.rotation = Vector3Lerp(
@@ -159,6 +170,7 @@ struct Fish {
 					this.rotationGoal,
 					0.025
 				);
+
 				// Look around randomly
 				if (this.movementTimer <= 0) {
 					this.rotationGoal = giveRandomRotation(random);
