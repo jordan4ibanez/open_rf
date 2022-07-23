@@ -92,7 +92,24 @@ struct Fish {
 
 	// The fish's AI, what it thinks each tick
 	void onTick(double delta, Random random) {
-		
+		switch (this.state) {
+			case FishState.RELAX: {
+				writeln("FISH ID: ", this.ID, " is relaxed");
+				break;
+			}
+			case FishState.WANDER: {
+				writeln("FISH ID: ", this.ID, " is just wandering around");
+				break;
+			}
+			case FishState.SPRINT: {
+				writeln("FISH ID: ", this.ID, " HAS SOMEWHERE TO BE!!");
+				break;
+			}
+			default: {
+				writeln("Something has gone extremely wrong with fish ID: ", this.ID);
+				writeln("WARNING: FISH ID ", this.ID, " HAS DEFAULTED IN IT'S FISHSTATE!");
+			}
+		}
 	}
 
 
