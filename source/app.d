@@ -81,6 +81,7 @@ void main() {
 
 	while (!WindowShouldClose()) {
 
+		double delta = GetFrameTime();
 
 		UpdateMusicStream(music);
 
