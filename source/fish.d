@@ -52,13 +52,20 @@ Vector3 giveRandomStartRotation(Random random) {
 ulong ID_DISPATCHER = 0;
 
 struct Fish {
-
+	// This ID will probably be replaced with a 
 	ulong ID;
+
+	// 3D spacial variables
 	Vector3 position;
 	Vector3 rotation;
+
+	// AI variables
 	double life = 0;
 	double exhaustion = 0;
 	FishState state;
+
+	// Animation variables
+
 
 	this(Vector3 position, double life, double exhaustion, Random random) {
 
@@ -92,6 +99,10 @@ struct Fish {
 
 	// The fish's AI, what it thinks each tick
 	void onTick(double delta, Random random) {
+
+		// This is debug, if something is going seriously wrong it's probably here
+		this.state = FishState.RELAX;
+
 		switch (this.state) {
 			case FishState.RELAX: {
 				writeln("FISH ID: ", this.ID, " is relaxed");
