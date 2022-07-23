@@ -7,7 +7,7 @@ import fish;
 
 
 const string gameVersion = "0.0.0";
-const byte numberOfFish = 10;
+const byte numberOfFish = 1;
 
 void main() {
 
@@ -81,16 +81,19 @@ void main() {
 
 	while (!WindowShouldClose()) {
 
+		// General logic begins here
+
 		double delta = GetFrameTime();
 
 		UpdateMusicStream(music);
 
-		BeginDrawing();
-
 		timer++;
 
-		// Fancy linear interpolation, probably makes a lot of objects in the heap
-		camera.target = Vector3Lerp(camera.target, cameraTarget, 0.1);
+		// Perform fish's logic tick
+		foreach (Fish fish; fishTank) {
+			fish.onTick(delta, random);
+		}
+
 
 		if (timer >= 12_000) {
 			selection++;
@@ -103,6 +106,17 @@ void main() {
 			timer = 0;
 		}
 
+
+		// Fancy linear interpolation
+		camera.target = Vector3Lerp(camera.target, cameraTarget, 0.1);
+
+		// General logic ends here
+
+
+		// Drawing logic begins here
+
+
+		BeginDrawing();
 
 		UpdateCamera(&camera);
 
