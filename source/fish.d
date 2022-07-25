@@ -181,6 +181,20 @@ struct Fish {
 				break;
 			}
 			case FishState.WANDER: {
+
+				// Linear interpolation is slightly faster when wandering
+				this.rotation = Vector3Lerp(
+					this.rotation,
+					this.rotationGoal,
+					0.075
+				);
+
+				// Look around randomly
+				if (this.movementTimer <= 0) {
+					this.rotationGoal = giveRandomRotation(random);
+					this.movementTimer = giveRandomMovementTimer(random);
+				}
+
 				// writeln("FISH ID: ", this.uuid, " is just wandering around");
 				//this.position += Vector3Normalize(this.rotation) * delta * 2.0;
 
@@ -194,6 +208,7 @@ struct Fish {
 				/*
 				Roll is the Z component of the fish's rotation
 				Roll will only be utilized for fish tanks with dying/dead fish in production
+				The Fish's AI and movement logic will not incorperate the Z component, just documentation
 				*/
 				/*
 				needs to implement COS and ATAN or TAN to convert radians into real direction
