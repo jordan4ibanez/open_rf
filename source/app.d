@@ -5,6 +5,7 @@ import std.string;
 import std.uuid;
 import raylib;
 import fish;
+import fish_definition;
 
 
 const string gameVersion = "0.0.0";
@@ -26,9 +27,9 @@ void main() {
 
 		fishTank[uuid] = Fish(
 			Vector3(
-				uniform(-20.0, 20.0, random),
+				uniform(-40.0, 40.0, random),
 				0.0,
-				uniform(-20.0, 20.0, random)
+				uniform(-40.0, 40.0, random)
 			),
 			uniform(0.0, 100.0, random),
 			uniform(0.0, 100.0, random),
@@ -142,18 +143,6 @@ void main() {
 
 		// Draw each fish
 		foreach (Fish fish; fishTank) {
-
-			/*
-			switch (thisFish.species) {
-				case FishSpecies.TROUT: {
-					writeln("dis a trout");
-					break;
-				}
-				default: {
-					writeln("o no dis no fish");
-				}
-			}
-			*/
 			// DrawModelEx(model,position,roationaxis,rotationangle,scale,color)
 			fishModel.transform = MatrixRotateXYZ(fish.getRotation() * DEG2RAD);
 			DrawModel(fishModel, fish.getPosition(),fish.getSize(),Colors.RAYWHITE);
