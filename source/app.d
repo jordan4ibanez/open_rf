@@ -2,6 +2,7 @@ import std.stdio;
 import std.math;
 import std.random;
 import std.string;
+import std.uuid;
 import raylib;
 import fish;
 
@@ -12,21 +13,29 @@ const byte numberOfFish = 100;
 void main() {
 
 	// A fish tank to hold the fish
-	Fish[] fishTank = new Fish[numberOfFish];
+	Fish[UUID] fishTank;
+
+	// An array to hold the fish UUID in order
+	UUID[] fishUUIDs = new UUID[numberOfFish];
 
 	Random random = Random(unpredictableSeed());
 
 	// Lets add some fish in there
 	for (byte i = 0; i < numberOfFish; i++) {
-		fishTank[i] = Fish(
+		UUID uuid = randomUUID();
+
+		fishTank[uuid] = Fish(
 			Vector3(
 				uniform(-20.0, 20.0, random),
 				0.0,
 				uniform(-20.0, 20.0, random)
 			),
 			uniform(0.0, 100.0, random),
-			uniform(0.0, 100.0, random)
+			uniform(0.0, 100.0, random),
+			uuid
 		);
+
+		fishUUIDs[i] = uuid;
 	}
 
 
@@ -71,7 +80,7 @@ void main() {
 	byte selection = 0;
 
 
-	Vector3 cameraTarget = fishTank[0].getPosition();
+	Vector3 cameraTarget = fishTank[fishUUIDs[0]].getPosition();
 
 	// Music things
 	Music music = LoadMusicStream("music/calmant.ogg");
@@ -94,8 +103,9 @@ void main() {
 		}
 
 		// This sets the camera to focus on the next fish
-		cameraTarget = fishTank[selection].getPosition();
-		if (timer >= 120) {
+		cameraTarget = fishTank[fishUUIDs[selection]].getPosition();
+
+		if ( timer >= 120 ) {
 			selection++;
 			if (selection >= numberOfFish){
 				selection = 0;
