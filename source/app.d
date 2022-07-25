@@ -94,13 +94,12 @@ void main() {
 		}
 
 		// This sets the camera to focus on the next fish
-		if (timer >= 75) {
+		cameraTarget = fishTank[selection].getPosition();
+		if (timer >= 120) {
 			selection++;
 			if (selection >= numberOfFish){
 				selection = 0;
 			}
-
-			cameraTarget = fishTank[selection].getPosition();
 
 			timer = 0;
 		}
