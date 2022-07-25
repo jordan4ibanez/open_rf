@@ -7,7 +7,8 @@ import raylib;
 struct FishDefinition {
     // General settings
     string name;
-    double scale; // This needs a min/max along with weight
+    double minScale;
+    double maxScale;
     double minNormalSpeed;
 	double maxNormalSpeed;
 	double minSprintSpeed;
@@ -19,7 +20,8 @@ struct FishDefinition {
     // Constructor
     this(
         string name,
-        double scale,
+        double minScale,
+        double maxScale,
         double minNormalSpeed,
         double maxNormalSpeed,
         double minSprintSpeed,
@@ -27,7 +29,8 @@ struct FishDefinition {
         // Arguments end here
 
         this.name = name;
-        this.scale = scale;
+        this.minScale = minscale;
+        this.maxScale = maxScale;
         this.minNormalSpeed = minNormalSpeed;
         this.maxNormalSpeed = maxNormalSpeed;
         this.minSprintSpeed = minSprintSpeed;
