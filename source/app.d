@@ -19,6 +19,17 @@ void main() {
 	// An array to hold the fish UUID in order
 	UUID[] fishUUIDs = new UUID[numberOfFish];
 
+	// A debug test fish definition, specifically trout
+	FishDefinition troutDefinition = FishDefinition(
+		"trout",
+		0.5,
+		2.0,
+		0.5,
+		1.3,
+		2.0,
+		4.0
+	);
+
 	Random random = Random(unpredictableSeed());
 
 	// Lets add some fish in there
