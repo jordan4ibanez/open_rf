@@ -29,7 +29,7 @@ struct FishDefinition {
         // Arguments end here
 
         this.name = name;
-        this.minScale = minscale;
+        this.minScale = minScale;
         this.maxScale = maxScale;
         this.minNormalSpeed = minNormalSpeed;
         this.maxNormalSpeed = maxNormalSpeed;
