@@ -1,5 +1,6 @@
 module fish_definition;
 
+import std.stdio;
 import std.string;
 import raylib;
 
@@ -14,12 +15,15 @@ struct FishDefinition {
 	double minSprintSpeed;
 	double maxSprintSpeed;
 
-    // Mesh settings
-    Mesh mesh; // This will automatically attach the texture
+    // Model settings
+    Model model;
+	Texture texture;
     
     // Constructor
     this(
         string name,
+        string modelLocation,
+        string modelTextureLocation,
         double minScale,
         double maxScale,
         double minNormalSpeed,
@@ -29,12 +33,21 @@ struct FishDefinition {
         // Arguments end here
 
         this.name = name;
+
+        this.model = LoadModel(modelLocation.dup.ptr);
+        this.texture = LoadTexture(modelTextureLocation.dup.ptr);
+        this.model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = this.texture;
+
         this.minScale = minScale;
         this.maxScale = maxScale;
         this.minNormalSpeed = minNormalSpeed;
         this.maxNormalSpeed = maxNormalSpeed;
         this.minSprintSpeed = minSprintSpeed;
         this.maxSprintSpeed = maxSprintSpeed;
+    }
+
+    Model getModel() {
+        return this.model;
     }
 }
 
@@ -44,10 +57,11 @@ struct FishDefinitionContainer {
     FishDefinition[string] data;
 
     void registerFish(FishDefinition newDefinition) {
+        writeln("THE NEW DEFINITION: ", newDefinition.name);
         this.data[newDefinition.name] = newDefinition;
     }
 
     FishDefinition getFish(string name) {
-        return data[name];
+        return this.data[name];
     }
 }
