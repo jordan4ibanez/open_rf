@@ -69,6 +69,8 @@ struct Fish {
 	// This makes the fish unique
 	UUID uuid;
 
+	string species;
+
 	// 3D spacial variables
 	Vector3 position;
 	Vector3 rotation;
@@ -88,7 +90,6 @@ struct Fish {
 	double minSprintSpeed = 0;
 	double maxSprintSpeed = 0;
 	
-	
 	FishState state;
 	double size = 1;
 
@@ -96,9 +97,11 @@ struct Fish {
 	Vector3 rotationGoal;
 
 	// Constructor
-	this(Vector3 position, double life, double exhaustion, UUID uuid) {
+	this(string species, Vector3 position, double life, double exhaustion, UUID uuid) {
 
 		Random random = Random(unpredictableSeed());
+
+		this.species = species;
 
 		this.position.x = position.x;
 		this.position.y = position.y;
@@ -141,6 +144,9 @@ struct Fish {
 	}
 	double getSize() {
 		return this.size;
+	}
+	string getSpecies() {
+		return this.species;
 	}
 
 
