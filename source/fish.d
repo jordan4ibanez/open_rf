@@ -185,11 +185,12 @@ struct Fish {
 				//this.position += Vector3Normalize(this.rotation) * delta * 2.0;
 
 				// Pitch is the X component of the fish's rotation
+				this.position.y += sin( DEG2RAD * this.rotation.x ) * delta; // * movement speed
 
 
 				// Yaw is the Y component of the fish's rotation
-				this.position.x += -sin( DEG2RAD * this.rotation.y) * delta; // * movement speed
-				this.position.z +=  cos( DEG2RAD * this.rotation.y) * delta; // * movement speed
+				this.position.x += -sin( DEG2RAD * this.rotation.y ) * delta; // * movement speed
+				this.position.z +=  cos( DEG2RAD * this.rotation.y ) * delta; // * movement speed
 				/*
 				Roll is the Z component of the fish's rotation
 				Roll will only be utilized for fish tanks with dying/dead fish in production
