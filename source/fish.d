@@ -158,7 +158,7 @@ struct Fish {
 		}
 
 		// This is debug, if something is going seriously wrong it's probably here
-		// this.state = FishState.RELAX;
+		this.state = FishState.WANDER;
 		
 
 		switch (this.state) {
@@ -180,7 +180,13 @@ struct Fish {
 				break;
 			}
 			case FishState.WANDER: {
-				writeln("FISH ID: ", this.uuid, " is just wandering around");
+				// writeln("FISH ID: ", this.uuid, " is just wandering around");
+				this.position += Vector3Normalize(this.rotation) * delta * 2.0;
+
+				/*
+				needs to implement COS and ATAN or TAN to convert radians into real direction
+				*/
+
 				break;
 			}
 			case FishState.SPRINT: {
