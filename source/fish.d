@@ -186,7 +186,7 @@ struct Fish {
 				this.rotation = Vector3Lerp(
 					this.rotation,
 					this.rotationGoal,
-					0.075
+					0.04
 				);
 
 				// Look around randomly
@@ -198,13 +198,15 @@ struct Fish {
 				// writeln("FISH ID: ", this.uuid, " is just wandering around");
 				//this.position += Vector3Normalize(this.rotation) * delta * 2.0;
 
+
+				double speed = 3;
 				// Pitch is the X component of the fish's rotation
-				this.position.y += sin( DEG2RAD * this.rotation.x ) * delta; // * movement speed
+				this.position.y += sin( DEG2RAD * this.rotation.x ) * delta * speed; // * movement speed
 
 
 				// Yaw is the Y component of the fish's rotation
-				this.position.x += -sin( DEG2RAD * this.rotation.y ) * delta; // * movement speed
-				this.position.z +=  cos( DEG2RAD * this.rotation.y ) * delta; // * movement speed
+				this.position.x += -sin( DEG2RAD * this.rotation.y ) * delta * speed; // * movement speed
+				this.position.z +=  cos( DEG2RAD * this.rotation.y ) * delta * speed; // * movement speed
 				/*
 				Roll is the Z component of the fish's rotation
 				Roll will only be utilized for fish tanks with dying/dead fish in production
