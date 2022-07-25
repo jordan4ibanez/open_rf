@@ -13,22 +13,36 @@ const byte numberOfFish = 100;
 
 void main() {
 
+	
+	InitWindow(800, 800,("OpenRF " ~ gameVersion).ptr);
+
+	SetTargetFPS(60);
+
+	SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
+
+	InitAudioDevice();
+
 	// A fish tank to hold the fish
 	Fish[UUID] fishTank;
 
 	// An array to hold the fish UUID in order
 	UUID[] fishUUIDs = new UUID[numberOfFish];
 
+	// A fish tank for the fish definitions
+	FishDefinitionContainer fishDefinitions = FishDefinitionContainer();
+
 	// A debug test fish definition, specifically trout
-	FishDefinition troutDefinition = FishDefinition(
+	fishDefinitions.registerFish(FishDefinition(
 		"trout",
+		"models/rainbowtrout.obj",
+		"models/rainbowtrout.png",
 		0.5,
 		2.0,
 		0.5,
 		1.3,
 		2.0,
 		4.0
-	);
+	));
 
 	Random random = Random(unpredictableSeed());
 
@@ -37,6 +51,7 @@ void main() {
 		UUID uuid = randomUUID();
 
 		fishTank[uuid] = Fish(
+			"trout",
 			Vector3(
 				uniform(-40.0, 40.0, random),
 				0.0,
@@ -57,24 +72,13 @@ void main() {
 	writeln("--------------------");
 	
 	foreach (Fish fish; fishTank) {
-		fish.debugger();
+		// fish.debugger();
 	}
 	writeln("--------------------");
 
 
 	// Now, let's REALLY see where those fish are
 
-	InitWindow(800, 800,("OpenRF " ~ gameVersion).ptr);
-
-	SetTargetFPS(60);
-
-	SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
-
-	InitAudioDevice();
-
-	Model fishModel = LoadModel("models/rainbowtrout.obj");
-	Texture fishTexture = LoadTexture("models/rainbowtrout.png");
-	fishModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = fishTexture;
 	// Material fishMaterial = LoadMaterialDefault();
 	// SetMaterialTexture(&fishMaterial,0, fishTexture);
 	// SetModelMeshMaterial(&fish,0, 0);
@@ -155,8 +159,12 @@ void main() {
 		// Draw each fish
 		foreach (Fish fish; fishTank) {
 			// DrawModelEx(model,position,roationaxis,rotationangle,scale,color)
-			fishModel.transform = MatrixRotateXYZ(fish.getRotation() * DEG2RAD);
-			DrawModel(fishModel, fish.getPosition(),fish.getSize(),Colors.RAYWHITE);
+			//Model model = 
+			string test = fish.getSpecies();
+			//writeln(test);
+			//fishDefinitions.getFish(test);
+			// model.transform = MatrixRotateXYZ(fish.getRotation() * DEG2RAD);
+			// DrawModel(model, fish.getPosition(),fish.getSize(),Colors.RAYWHITE);
 		}
 
 		EndMode3D();
