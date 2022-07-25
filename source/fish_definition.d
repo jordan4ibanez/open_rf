@@ -24,6 +24,7 @@ struct FishDefinition {
         double maxNormalSpeed,
         double minSprintSpeed,
         double maxSprintSpeed) {
+        // Arguments end here
 
         this.name = name;
         this.scale = scale;
