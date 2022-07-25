@@ -90,7 +90,7 @@ struct Fish {
 	Vector3 rotationGoal;
 
 	// Constructor
-	this(Vector3 position, double life, double exhaustion) {
+	this(Vector3 position, double life, double exhaustion, UUID uuid) {
 
 		Random random = Random(unpredictableSeed());
 
@@ -116,7 +116,7 @@ struct Fish {
 
 		this.state = giveRandomStartState(random);
 
-		this.uuid = randomUUID();
+		this.uuid = uuid;
 	}
     
 	// Adds life to a fish, this is a placeholder debug
