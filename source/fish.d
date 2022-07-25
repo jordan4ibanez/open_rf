@@ -51,6 +51,11 @@ Vector3 giveRandomRotation(Random random) {
 	);
 }
 
+// Quickly dispatches a random size
+double giveRandomSize(double min, double max, Random random) {
+	return uniform(min, max, random);
+}
+
 // Dispatches random values for animation & AI
 double giveRandomStateTimer(Random random) {
 	return uniform(5.0,20.0, random);
@@ -85,6 +90,7 @@ struct Fish {
 	
 	
 	FishState state;
+	double size = 1;
 
 	// Animation variables
 	Vector3 rotationGoal;
@@ -116,6 +122,8 @@ struct Fish {
 
 		this.state = giveRandomStartState(random);
 
+		this.size = giveRandomSize(0.2, 3.0, random);
+
 		this.uuid = uuid;
 	}
     
@@ -130,6 +138,9 @@ struct Fish {
 	}
 	Vector3 getRotation() {
 		return this.rotation;
+	}
+	double getSize() {
+		return this.size;
 	}
 
 
