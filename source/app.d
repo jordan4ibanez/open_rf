@@ -156,7 +156,7 @@ void main() {
 			*/
 			// DrawModelEx(model,position,roationaxis,rotationangle,scale,color)
 			fishModel.transform = MatrixRotateXYZ(fish.getRotation() * DEG2RAD);
-			DrawModel(fishModel, fish.getPosition(),1,Colors.RAYWHITE);
+			DrawModel(fishModel, fish.getPosition(),fish.getSize(),Colors.RAYWHITE);
 		}
 
 		EndMode3D();
