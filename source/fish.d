@@ -3,6 +3,7 @@ module fish;
 import std.stdio;
 import std.random;
 import std.uuid;
+import std.math;
 import raylib;
 
 // The possible states that a fish can be in
@@ -181,8 +182,18 @@ struct Fish {
 			}
 			case FishState.WANDER: {
 				// writeln("FISH ID: ", this.uuid, " is just wandering around");
-				this.position += Vector3Normalize(this.rotation) * delta * 2.0;
+				//this.position += Vector3Normalize(this.rotation) * delta * 2.0;
 
+				// Pitch is the X component of the fish's rotation
+
+
+				// Yaw is the Y component of the fish's rotation
+				this.position.x += -sin( DEG2RAD * this.rotation.y) * delta; // * movement speed
+				this.position.z +=  cos( DEG2RAD * this.rotation.y) * delta; // * movement speed
+				/*
+				Roll is the Z component of the fish's rotation
+				Roll will only be utilized for fish tanks with dying/dead fish in production
+				*/
 				/*
 				needs to implement COS and ATAN or TAN to convert radians into real direction
 				*/
