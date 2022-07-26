@@ -124,8 +124,13 @@ void main() {
 	SetMusicVolume(music, 0.6);
 	PlayMusicStream(music);
 
+    Model boatModel = LoadModel("models/boatModel.obj");
+    Texture boatTexture = LoadTexture("models/wood.png");
+    boatModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = boatTexture;
+
 	// First person camera mode for debugging
 	SetCameraMode(camera, CameraMode.CAMERA_FIRST_PERSON);
+	
 
 	while (!WindowShouldClose()) {
 
@@ -192,6 +197,9 @@ void main() {
 			DrawModel(model, fish.getPosition(),fish.getSize(),Colors.WHITE);
 		}
 		*/
+
+		// Draw a debug boat
+		DrawModel(boatModel, Vector3(0,1,0),1.0,Colors.WHITE);
 
 		EndMode3D();
 
