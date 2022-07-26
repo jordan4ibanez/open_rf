@@ -2,6 +2,7 @@ module fish_definition;
 
 import std.stdio;
 import std.string;
+import std.random;
 import raylib;
 
 // The structs which contain the data
@@ -55,13 +56,26 @@ struct FishDefinition {
 struct FishDefinitionContainer {
     
     FishDefinition[string] data;
+    string[] keys;
 
     void registerFish(FishDefinition newDefinition) {
         writeln("THE NEW DEFINITION: ", newDefinition.name);
         this.data[newDefinition.name] = newDefinition;
+        this.keys ~= newDefinition.name;
     }
 
     FishDefinition getFish(string name) {
         return this.data[name];
+    }
+
+    FishDefinition giveRandomfishDefinition() {
+        Random random = Random(unpredictableSeed());
+        string key = this.keys[uniform(0, this.keys.length, random)];
+        return this.data[key];
+    }
+
+    string giveRandomFish() {
+        Random random = Random(unpredictableSeed());
+        return this.keys[uniform(0, this.keys.length, random)];
     }
 }
