@@ -12,13 +12,13 @@ struct FishDefinition {
     double minScale;
     double maxScale;
     double minNormalSpeed;
-	double maxNormalSpeed;
-	double minSprintSpeed;
-	double maxSprintSpeed;
+    double maxNormalSpeed;
+    double minSprintSpeed;
+    double maxSprintSpeed;
 
     // Model settings
     Model model;
-	Texture texture;
+    Texture texture;
     
     // Constructor
     this(
