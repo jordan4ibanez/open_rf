@@ -4,6 +4,7 @@ import std.stdio;
 import std.random;
 import std.uuid;
 import std.math;
+import fish_definition;
 import raylib;
 
 // The possible states that a fish can be in
@@ -84,6 +85,7 @@ struct Fish {
 	// Movement Variables
 	double movementTimer = 0;
 	double movementSpeed = 0;
+	double movementSpeedGoal = 0;
 	// These will be defined by the fish registration
 	double minNormalSpeed = 0;
 	double maxNormalSpeed = 0;
@@ -97,11 +99,11 @@ struct Fish {
 	Vector3 rotationGoal;
 
 	// Constructor
-	this(string species, Vector3 position, double life, double exhaustion, UUID uuid) {
+	this(FishDefinition definition, Vector3 position, double life, double exhaustion, UUID uuid) {
 
 		Random random = Random(unpredictableSeed());
 
-		this.species = species;
+		this.species = definition.name;
 
 		this.position.x = position.x;
 		this.position.y = position.y;
@@ -125,7 +127,7 @@ struct Fish {
 
 		this.state = giveRandomStartState(random);
 
-		this.size = giveRandomSize(0.2, 3.0, random);
+		this.size = giveRandomSize(definition.minScale, definition.maxScale, random);
 
 		this.uuid = uuid;
 	}
@@ -215,15 +217,12 @@ struct Fish {
 				// writeln("FISH ID: ", this.uuid, " is just wandering around");
 				//this.position += Vector3Normalize(this.rotation) * delta * 2.0;
 
-
-				double speed = 3;
 				// Pitch is the X component of the fish's rotation
-				this.position.y += sin( DEG2RAD * this.rotation.x ) * delta * speed; // * movement speed
-
+				this.position.y += sin( DEG2RAD * this.rotation.x ) * delta * this.movementSpeed; // * movement speed
 
 				// Yaw is the Y component of the fish's rotation
-				this.position.x += -sin( DEG2RAD * this.rotation.y ) * delta * speed; // * movement speed
-				this.position.z +=  cos( DEG2RAD * this.rotation.y ) * delta * speed; // * movement speed
+				this.position.x += -sin( DEG2RAD * this.rotation.y ) * delta * this.movementSpeed; // * movement speed
+				this.position.z +=  cos( DEG2RAD * this.rotation.y ) * delta * this.movementSpeed; // * movement speed
 				/*
 				Roll is the Z component of the fish's rotation
 				Roll will only be utilized for fish tanks with dying/dead fish in production
