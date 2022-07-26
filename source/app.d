@@ -44,14 +44,28 @@ void main() {
 		4.0
 	));
 
+	fishDefinitions.registerFish(FishDefinition(
+		"perch",
+		"models/perch.obj",
+		"models/perch.png",
+		0.5,
+		1.3,
+		0.5,
+		1.3,
+		2.0,
+		4.0
+	));
+
 	Random random = Random(unpredictableSeed());
 
 	// Lets add some fish in there
 	for (byte i = 0; i < numberOfFish; i++) {
 		UUID uuid = randomUUID();
 
+		FishDefinition thisDefinition = fishDefinitions.giveRandomfishDefinition();
+
 		fishTank[uuid] = Fish(
-			"trout",
+			thisDefinition,
 			Vector3(
 				uniform(-40.0, 40.0, random),
 				0.0,
@@ -67,14 +81,17 @@ void main() {
 
 
 	// Now let's see where those fish are located in memory
-	writeln("--------------------");
-	writeln("Here are those fish:");
-	writeln("--------------------");
-	
-	foreach (Fish fish; fishTank) {
-		// fish.debugger();
+	bool prototype = false;
+	if (prototype) {
+		writeln("--------------------");
+		writeln("Here are those fish:");
+		writeln("--------------------");
+
+		foreach (Fish fish; fishTank) {
+			fish.debugger();
+		}
+		writeln("--------------------");
 	}
-	writeln("--------------------");
 
 
 	// Now, let's REALLY see where those fish are
@@ -158,13 +175,9 @@ void main() {
 
 		// Draw each fish
 		foreach (Fish fish; fishTank) {
-			// DrawModelEx(model,position,roationaxis,rotationangle,scale,color)
-			//Model model = 
-			string test = fish.getSpecies();
-			//writeln(test);
-			//fishDefinitions.getFish(test);
-			// model.transform = MatrixRotateXYZ(fish.getRotation() * DEG2RAD);
-			// DrawModel(model, fish.getPosition(),fish.getSize(),Colors.RAYWHITE);
+			Model model = fishDefinitions.getFish(fish.getSpecies()).getModel();
+			model.transform = MatrixRotateXYZ(fish.getRotation() * DEG2RAD);
+			DrawModel(model, fish.getPosition(),fish.getSize(),Colors.WHITE);
 		}
 
 		EndMode3D();
