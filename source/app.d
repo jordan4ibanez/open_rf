@@ -124,6 +124,9 @@ void main() {
 	SetMusicVolume(music, 0.6);
 	PlayMusicStream(music);
 
+	// First person camera mode for debugging
+	SetCameraMode(camera, CameraMode.CAMERA_FIRST_PERSON);
+
 	while (!WindowShouldClose()) {
 
 		// General logic begins here
@@ -131,6 +134,8 @@ void main() {
 		double delta = GetFrameTime();
 
 		UpdateMusicStream(music);
+
+		/*
 
 		timer++;
 
@@ -155,6 +160,8 @@ void main() {
 		// Fancy linear interpolation
 		camera.target = Vector3Lerp(camera.target, cameraTarget, 0.1);
 
+		*/
+
 		// General logic ends here
 
 
@@ -178,11 +185,13 @@ void main() {
 
 
 		// Draw each fish
+		/*
 		foreach (Fish fish; fishTank) {
 			Model model = fishDefinitions.getFish(fish.getSpecies()).getModel();
 			model.transform = MatrixRotateXYZ(fish.getRotation() * DEG2RAD);
 			DrawModel(model, fish.getPosition(),fish.getSize(),Colors.WHITE);
 		}
+		*/
 
 		EndMode3D();
 
