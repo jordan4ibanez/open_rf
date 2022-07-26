@@ -105,6 +105,11 @@ struct Fish {
 
 		this.species = definition.name;
 
+		this.minNormalSpeed = definition.minNormalSpeed;
+		this.maxNormalSpeed = definition.maxNormalSpeed;
+		this.minSprintSpeed = definition.minSprintSpeed;
+		this.maxSprintSpeed = definition.maxSprintSpeed;
+
 		this.position.x = position.x;
 		this.position.y = position.y;
 		this.position.z = position.z;
@@ -178,7 +183,7 @@ struct Fish {
 		}
 
 		// This is debug, if something is going seriously wrong it's probably here
-		this.state = FishState.WANDER;
+		this.state = FishState.SPRINT;
 		
 
 		switch (this.state) {
@@ -212,6 +217,11 @@ struct Fish {
 				if (this.movementTimer <= 0) {
 					this.rotationGoal = giveRandomRotation(random);
 					this.movementTimer = giveRandomMovementTimer(random);
+					this.movementSpeedGoal = giveRandomSize(this.minNormalSpeed, this.maxNormalSpeed, random);
+				}
+
+				if (this.movementSpeedGoal != 0.0) {
+					this.movementSpeed = Lerp(this.movementSpeed, this.movementSpeedGoal, 0.04);
 				}
 
 				// writeln("FISH ID: ", this.uuid, " is just wandering around");
@@ -235,7 +245,42 @@ struct Fish {
 				break;
 			}
 			case FishState.SPRINT: {
-				writeln("FISH ID: ", this.uuid, " HAS SOMEWHERE TO BE!!");
+				// Linear interpolation is slightly faster when sprinting
+				this.rotation = Vector3Lerp(
+					this.rotation,
+					this.rotationGoal,
+					0.05
+				);
+
+				// Look around randomly
+				if (this.movementTimer <= 0) {
+					this.rotationGoal = giveRandomRotation(random);
+					this.movementTimer = giveRandomMovementTimer(random);
+					this.movementSpeedGoal = giveRandomSize(this.minSprintSpeed, this.maxSprintSpeed, random);
+				}
+
+				if (this.movementSpeedGoal != 0.0) {
+					this.movementSpeed = Lerp(this.movementSpeed, this.movementSpeedGoal, 0.075);
+				}
+
+				// writeln("FISH ID: ", this.uuid, " is just wandering around");
+				//this.position += Vector3Normalize(this.rotation) * delta * 2.0;
+
+				// Pitch is the X component of the fish's rotation
+				this.position.y += sin( DEG2RAD * this.rotation.x ) * delta * this.movementSpeed; // * movement speed
+
+				// Yaw is the Y component of the fish's rotation
+				this.position.x += -sin( DEG2RAD * this.rotation.y ) * delta * this.movementSpeed; // * movement speed
+				this.position.z +=  cos( DEG2RAD * this.rotation.y ) * delta * this.movementSpeed; // * movement speed
+				/*
+				Roll is the Z component of the fish's rotation
+				Roll will only be utilized for fish tanks with dying/dead fish in production
+				The Fish's AI and movement logic will not incorperate the Z component, just documentation
+				*/
+				/*
+				needs to implement COS and ATAN or TAN to convert radians into real direction
+				*/
+
 				break;
 			}
 			default: {
