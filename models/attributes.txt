@@ -1,3 +1,5 @@
 rainbowtrout: https://opengameart.org/content/rainbow-trout
 
 perch: https://opengameart.org/content/perch-fish
+
+woodBoat: https://opengameart.org/content/low-poly-boat
