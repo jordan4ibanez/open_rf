@@ -13,196 +13,199 @@ const byte numberOfFish = 100;
 
 void main() {
 
-	
-	InitWindow(800, 800,("OpenRF " ~ gameVersion).ptr);
+    
+    InitWindow(800, 800,("OpenRF " ~ gameVersion).ptr);
 
-	SetTargetFPS(60);
+    SetTargetFPS(60);
 
-	SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
+    SetWindowState(ConfigFlags.FLAG_WINDOW_RESIZABLE);
 
-	InitAudioDevice();
+    InitAudioDevice();
 
-	// A fish tank to hold the fish
-	Fish[UUID] fishTank;
+    // A fish tank to hold the fish
+    Fish[UUID] fishTank;
 
-	// An array to hold the fish UUID in order
-	UUID[] fishUUIDs = new UUID[numberOfFish];
+    // An array to hold the fish UUID in order
+    UUID[] fishUUIDs = new UUID[numberOfFish];
 
-	// A fish tank for the fish definitions
-	FishDefinitionContainer fishDefinitions = FishDefinitionContainer();
+    // A fish tank for the fish definitions
+    FishDefinitionContainer fishDefinitions = FishDefinitionContainer();
 
-	// A debug test fish definition, specifically trout
-	fishDefinitions.registerFish(FishDefinition(
-		"trout",
-		"models/rainbowtrout.obj",
-		"models/rainbowtrout.png",
-		0.5,
-		2.0,
-		// Normal speed min,max
-		1.0,
-		3.0,
-		// Sprint speed min,max
-		3.0,
-		6.0
-	));
+    // A debug test fish definition, specifically trout
+    fishDefinitions.registerFish(FishDefinition(
+        "trout",
+        "models/rainbowtrout.obj",
+        "models/rainbowtrout.png",
+        0.5,
+        2.0,
+        // Normal speed min,max
+        1.0,
+        3.0,
+        // Sprint speed min,max
+        3.0,
+        6.0
+    ));
 
-	fishDefinitions.registerFish(FishDefinition(
-		"perch",
-		"models/perch.obj",
-		"models/perch.png",
-		0.5,
-		1.3,
-		// Normal speed min,max
-		0.5,
-		1.3,
-		// Sprint speed min,max
-		2.0,
-		4.0
-	));
+    fishDefinitions.registerFish(FishDefinition(
+        "perch",
+        "models/perch.obj",
+        "models/perch.png",
+        0.5,
+        1.3,
+        // Normal speed min,max
+        0.5,
+        1.3,
+        // Sprint speed min,max
+        2.0,
+        4.0
+    ));
 
-	Random random = Random(unpredictableSeed());
+    Random random = Random(unpredictableSeed());
 
-	// Lets add some fish in there
-	for (byte i = 0; i < numberOfFish; i++) {
-		UUID uuid = randomUUID();
+    // Lets add some fish in there
+    for (byte i = 0; i < numberOfFish; i++) {
+        UUID uuid = randomUUID();
 
-		FishDefinition thisDefinition = fishDefinitions.giveRandomfishDefinition();
+        FishDefinition thisDefinition = fishDefinitions.giveRandomfishDefinition();
 
-		fishTank[uuid] = Fish(
-			thisDefinition,
-			Vector3(
-				uniform(-40.0, 40.0, random),
-				0.0,
-				uniform(-40.0, 40.0, random)
-			),
-			uniform(0.0, 100.0, random),
-			uniform(0.0, 100.0, random),
-			uuid
-		);
+        fishTank[uuid] = Fish(
+            thisDefinition,
+            Vector3(
+                uniform(-40.0, 40.0, random),
+                0.0,
+                uniform(-40.0, 40.0, random)
+            ),
+            uniform(0.0, 100.0, random),
+            uniform(0.0, 100.0, random),
+            uuid
+        );
 
-		fishUUIDs[i] = uuid;
-	}
-
-
-	// Now let's see where those fish are located in memory
-	bool prototype = false;
-	if (prototype) {
-		writeln("--------------------");
-		writeln("Here are those fish:");
-		writeln("--------------------");
-
-		foreach (Fish fish; fishTank) {
-			fish.debugger();
-		}
-		writeln("--------------------");
-	}
+        fishUUIDs[i] = uuid;
+    }
 
 
-	// Now, let's REALLY see where those fish are
+    // Now let's see where those fish are located in memory
+    bool prototype = false;
+    if (prototype) {
+        writeln("--------------------");
+        writeln("Here are those fish:");
+        writeln("--------------------");
 
-	// Material fishMaterial = LoadMaterialDefault();
-	// SetMaterialTexture(&fishMaterial,0, fishTexture);
-	// SetModelMeshMaterial(&fish,0, 0);
-
-
-	Camera camera = Camera(
-		Vector3(0,10,10),
-		Vector3(0,0,0),
-		Vector3(0,1,0),
-		55,
-		CameraProjection.CAMERA_PERSPECTIVE
-	);
-
-	int timer = 0;
-	byte selection = 0;
+        foreach (Fish fish; fishTank) {
+            fish.debugger();
+        }
+        writeln("--------------------");
+    }
 
 
-	Vector3 cameraTarget = fishTank[fishUUIDs[0]].getPosition();
+    // Now, let's REALLY see where those fish are
 
-	// Music things
-	Music music = LoadMusicStream("music/calmant.ogg");
-	SetMusicVolume(music, 0.6);
-	PlayMusicStream(music);
+    // Material fishMaterial = LoadMaterialDefault();
+    // SetMaterialTexture(&fishMaterial,0, fishTexture);
+    // SetModelMeshMaterial(&fish,0, 0);
+
+
+    Camera camera = Camera(
+        Vector3(0,10,10),
+        Vector3(0,0,0),
+        Vector3(0,1,0),
+        55,
+        CameraProjection.CAMERA_PERSPECTIVE
+    );
+
+    int timer = 0;
+    byte selection = 0;
+
+
+    Vector3 cameraTarget = fishTank[fishUUIDs[0]].getPosition();
+
+    // Music things
+    Music music = LoadMusicStream("music/calmant.ogg");
+    SetMusicVolume(music, 0.6);
+    PlayMusicStream(music);
 
     Model boatModel = LoadModel("models/boatModel.obj");
     Texture boatTexture = LoadTexture("models/wood.png");
     boatModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = boatTexture;
 
-	// First person camera mode for debugging
-	SetCameraMode(camera, CameraMode.CAMERA_FIRST_PERSON);
-	
+    // First person camera mode for debugging
+    SetCameraMode(camera, CameraMode.CAMERA_FIRST_PERSON);
 
-	while (!WindowShouldClose()) {
+    // This disables the camera movement control
+    SetCameraMoveControls(0,0,0,0,0,0);
+    
 
-		// General logic begins here
+    while (!WindowShouldClose()) {
 
-		double delta = GetFrameTime();
+        // General logic begins here
 
-		UpdateMusicStream(music);
+        double delta = GetFrameTime();
 
-		/*
+        UpdateMusicStream(music);
 
-		timer++;
+        /*
 
-		// Perform fish's logic tick
-		foreach (ref Fish fish; fishTank) {
-			fish.onTick(delta);
-		}
+        timer++;
 
-		// This sets the camera to focus on the next fish
-		cameraTarget = fishTank[fishUUIDs[selection]].getPosition();
+        // Perform fish's logic tick
+        foreach (ref Fish fish; fishTank) {
+            fish.onTick(delta);
+        }
 
-		if ( timer >= 120 ) {
-			selection++;
-			if (selection >= numberOfFish){
-				selection = 0;
-			}
+        // This sets the camera to focus on the next fish
+        cameraTarget = fishTank[fishUUIDs[selection]].getPosition();
 
-			timer = 0;
-		}
+        if ( timer >= 120 ) {
+            selection++;
+            if (selection >= numberOfFish){
+                selection = 0;
+            }
 
-
-		// Fancy linear interpolation
-		camera.target = Vector3Lerp(camera.target, cameraTarget, 0.1);
-
-		*/
-
-		// General logic ends here
+            timer = 0;
+        }
 
 
-		// Drawing logic begins here
+        // Fancy linear interpolation
+        camera.target = Vector3Lerp(camera.target, cameraTarget, 0.1);
+
+        */
+
+        // General logic ends here
 
 
-		BeginDrawing();
-
-		UpdateCamera(&camera);
-
-		ClearBackground(Color(0,105,148,255));
-
-		BeginMode3D(camera);
-
-		// Reference cubes
-		DrawCube(Vector3(0,-10,0),2,2,2,Colors.BLACK);
-		DrawCube(Vector3(10,0,0),2,2,2,Colors.BLACK);
-		DrawCube(Vector3(-10,0,0),2,2,2,Colors.BLACK);
-		DrawCube(Vector3(0,0,10),2,2,2,Colors.BLACK);
-		DrawCube(Vector3(0,0,-10),2,2,2,Colors.BLACK);
+        // Drawing logic begins here
 
 
-		// Draw each fish
-		/*
-		foreach (Fish fish; fishTank) {
-			Model model = fishDefinitions.getFish(fish.getSpecies()).getModel();
-			model.transform = MatrixRotateXYZ(fish.getRotation() * DEG2RAD);
-			DrawModel(model, fish.getPosition(),fish.getSize(),Colors.WHITE);
-		}
-		*/
+        BeginDrawing();
 
-		// Draw a debug boat
-		DrawModel(boatModel, Vector3(0,1,0),1.0,Colors.WHITE);
+        UpdateCamera(&camera);
 
-		EndMode3D();
+        ClearBackground(Color(0,105,148,255));
 
-		EndDrawing();
-	}
+        BeginMode3D(camera);
+
+        // Reference cubes
+        DrawCube(Vector3(0,-10,0),2,2,2,Colors.BLACK);
+        DrawCube(Vector3(10,0,0),2,2,2,Colors.BLACK);
+        DrawCube(Vector3(-10,0,0),2,2,2,Colors.BLACK);
+        DrawCube(Vector3(0,0,10),2,2,2,Colors.BLACK);
+        DrawCube(Vector3(0,0,-10),2,2,2,Colors.BLACK);
+
+
+        // Draw each fish
+        /*
+        foreach (Fish fish; fishTank) {
+            Model model = fishDefinitions.getFish(fish.getSpecies()).getModel();
+            model.transform = MatrixRotateXYZ(fish.getRotation() * DEG2RAD);
+            DrawModel(model, fish.getPosition(),fish.getSize(),Colors.WHITE);
+        }
+        */
+
+        // Draw a debug boat
+        DrawModel(boatModel, Vector3(0,1,0),1.0,Colors.WHITE);
+
+        EndMode3D();
+
+        EndDrawing();
+    }
 }
