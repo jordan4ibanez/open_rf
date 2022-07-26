@@ -11,6 +11,6 @@ open_rf.lib
 open_rf-test-*
 *.exe
 *.o
-*.obj
+#*.obj
 *.lst
 *.pdb
