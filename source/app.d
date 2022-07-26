@@ -38,10 +38,12 @@ void main() {
 		"models/rainbowtrout.png",
 		0.5,
 		2.0,
-		0.5,
-		1.3,
-		2.0,
-		4.0
+		// Normal speed min,max
+		1.0,
+		3.0,
+		// Sprint speed min,max
+		3.0,
+		6.0
 	));
 
 	fishDefinitions.registerFish(FishDefinition(
@@ -50,8 +52,10 @@ void main() {
 		"models/perch.png",
 		0.5,
 		1.3,
+		// Normal speed min,max
 		0.5,
 		1.3,
+		// Sprint speed min,max
 		2.0,
 		4.0
 	));
