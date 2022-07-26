@@ -110,20 +110,14 @@ struct Fish {
         this.minSprintSpeed = definition.minSprintSpeed;
         this.maxSprintSpeed = definition.maxSprintSpeed;
 
-        this.position.x = position.x;
-        this.position.y = position.y;
-        this.position.z = position.z;
+        this.position = position;
 
-        this.positionGoal.x = position.x;
-        this.positionGoal.y = position.y;
-        this.positionGoal.z = position.z;
+        this.positionGoal = position;
 
         this.rotation = giveRandomRotation(random);
 
         // Clone the rotations so the fish do not randomly spin at start
-        this.rotationGoal.x = this.rotation.x;
-        this.rotationGoal.y = this.rotation.y;
-        this.rotationGoal.z = this.rotation.z;
+        this.rotationGoal = this.rotation;
 
         this.life = life;
         this.exhaustion = exhaustion;

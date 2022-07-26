@@ -6,6 +6,7 @@ import std.uuid;
 import raylib;
 import fish;
 import fish_definition;
+import player;
 
 
 const string gameVersion = "0.0.0";
@@ -133,6 +134,9 @@ void main() {
 
     // This disables the camera movement control
     SetCameraMoveControls(0,0,0,0,0,0);
+
+    // Create single player
+    
     
 
     while (!WindowShouldClose()) {
