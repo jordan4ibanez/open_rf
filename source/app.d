@@ -13,7 +13,6 @@ const string gameVersion = "0.0.0";
 const byte numberOfFish = 100;
 
 void main() {
-
     
     InitWindow(800, 800,("OpenRF " ~ gameVersion).ptr);
 
@@ -130,14 +129,15 @@ void main() {
     boatModel.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = boatTexture;
 
     // First person camera mode for debugging
+    //SetCameraMode(camera, CameraMode.CAMERA_FIRST_PERSON);
+
     SetCameraMode(camera, CameraMode.CAMERA_FIRST_PERSON);
 
     // This disables the camera movement control
-    SetCameraMoveControls(0,0,0,0,0,0);
+    //SetCameraMoveControls(0,0,0,0,0,0);
 
     // Create single player
-    
-    
+    Player player = Player();
 
     while (!WindowShouldClose()) {
 
@@ -174,15 +174,26 @@ void main() {
 
         */
 
+        // writeln(player.getCameraPos());
+        //writeln(camera.position);
+
+        //camera.position = player.getCameraPos();
+
+        //writeln(camera.target.y);
+
+        player.onTick(delta, camera);
+
         // General logic ends here
 
 
         // Drawing logic begins here
 
-
         BeginDrawing();
 
         UpdateCamera(&camera);
+
+        // This has to go after UpdateCamera
+        camera.position = player.getCameraPos();
 
         ClearBackground(Color(0,105,148,255));
 
