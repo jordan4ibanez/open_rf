@@ -29,14 +29,24 @@ struct Player {
     }
 
     void onTick(double delta, Camera camera) {
-        //writeln(camera.target);
-        writeln(camera.position);
+        
 
         if (IsKeyDown(KeyboardKey.KEY_W)) {
-            Vector2 direction = Vector2(camera.target.x, camera.target.z);
 
-            this.position.x += direction.x * delta;
-            this.position.z += direction.y * delta;
+            // Camera's target becomes more skewed the further from 0,0,0 it is
+            // This corrects it, allowing direct calculations with it
+            Vector2 direction = Vector2Normalize(
+                Vector2(
+                    camera.target.x - camera.position.x,
+                    camera.target.z - camera.position.z
+                )
+            );
+
+            // This will intake inertia soon enough
+            double speed = 2;
+
+            this.position.x += direction.x * delta * speed;
+            this.position.z += direction.y * delta * speed;
         }
     }
 }
